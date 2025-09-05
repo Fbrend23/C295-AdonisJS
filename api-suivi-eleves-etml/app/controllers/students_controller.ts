@@ -5,7 +5,8 @@ export default class StudentsController {
   /**
    * Display a list of resource
    */
-  async index({}: HttpContext) {
+  async index({ response }: HttpContext) {
+    response.ok(students)
     return await Student.query().orderBy('name').orderBy('firstname')
   }
 
@@ -17,8 +18,9 @@ export default class StudentsController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) {
+  async store({ request, response }: HttpContext) {
     const student = request.only(['name', 'firstname'])
+    response.created()
     return await Student.create(student)
   }
 
