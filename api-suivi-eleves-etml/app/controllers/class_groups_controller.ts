@@ -7,7 +7,7 @@ export default class ClassGroupsController {
    * Display a list of resource
    */
   async index({ response }: HttpContext) {
-    const classGroup = await Class_group.query().orderBy('name')
+    const classGroup = await Class_group.query().preload('teacher').orderBy('name')
     response.ok(classGroup)
     return classGroup
   }
@@ -17,9 +17,9 @@ export default class ClassGroupsController {
    */
   async store({ request, response }: HttpContext) {
     // Récupération des données envoyées par le client et validation des données
-    const { name } = await request.validateUsing(classGroupValidator)
+    const { name, teacherId } = await request.validateUsing(classGroupValidator)
     // Création d'un nouvel élève avec les données validées
-    const classgroup = await Class_group.create({ name })
+    const classgroup = await Class_group.create({ name, teacherId })
     // On utilise `response.created` pour retourner un code HTTP 201 avec les
     // données de l'élève créé
     return response.created(classgroup)
@@ -29,7 +29,12 @@ export default class ClassGroupsController {
    * Show individual record
    */
   async show({ params }: HttpContext) {
-    return await Class_group.findOrFail(params.id)
+    const classGroup = await Class_group.query()
+      .preload('teacher')
+      .where('id', params.id)
+      .firstOrFail()
+
+    return classGroup
   }
 
   /**
