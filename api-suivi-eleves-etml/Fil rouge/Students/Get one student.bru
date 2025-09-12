@@ -1,0 +1,15 @@
+meta {
+  name: Get one student
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:3333/students/500
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

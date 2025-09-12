@@ -1,0 +1,22 @@
+meta {
+  name: Add a new class
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:3333/classGroups/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name" : "CIN1Z",
+    "teacherId": 1
+  }
+}
+
+settings {
+  encodeUrl: true
+}
