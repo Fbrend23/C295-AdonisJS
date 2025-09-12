@@ -1,15 +1,15 @@
-import Student from '#models/student'
+import Class_group from '#models/class_group'
 import type { HttpContext } from '@adonisjs/core/http'
-import { studentValidator } from '#validators/student'
+import { classGroupValidator } from '#validators/class_group'
 
-export default class StudentsController {
+export default class ClassGroupsController {
   /**
    * Display a list of resource
    */
   async index({ response }: HttpContext) {
-    const student = await Student.query().orderBy('name').orderBy('firstname')
-    response.ok(student)
-    return student
+    const classGroup = await Class_group.query().orderBy('name')
+    response.ok(classGroup)
+    return classGroup
   }
 
   /**
@@ -17,19 +17,19 @@ export default class StudentsController {
    */
   async store({ request, response }: HttpContext) {
     // Récupération des données envoyées par le client et validation des données
-    const { name, firstname } = await request.validateUsing(studentValidator)
+    const { name } = await request.validateUsing(classGroupValidator)
     // Création d'un nouvel élève avec les données validées
-    const student = await Student.create({ name, firstname })
+    const classgroup = await Class_group.create({ name })
     // On utilise `response.created` pour retourner un code HTTP 201 avec les
     // données de l'élève créé
-    return response.created(student)
+    return response.created(classgroup)
   }
 
   /**
    * Show individual record
    */
   async show({ params }: HttpContext) {
-    return await Student.findOrFail(params.id)
+    return await Class_group.findOrFail(params.id)
   }
 
   /**
@@ -42,24 +42,24 @@ export default class StudentsController {
    */
   async update({ params, request }: HttpContext) {
     //Récupération des données
-    const data = await request.validateUsing(studentValidator)
+    const data = await request.validateUsing(classGroupValidator)
 
     //Vérification de l'existence de l'élève
-    const student = await Student.findOrFail(params.id)
+    const classGroup = await Class_group.findOrFail(params.id)
 
-    student.merge(data)
+    classGroup.merge(data)
 
-    await student.save()
+    await classGroup.save()
 
-    return student
+    return classGroup
   }
 
   /**
    * Delete record
    */
   async destroy({ params }: HttpContext) {
-    const student = await Student.findOrFail(params.id)
+    const classgroup = await Class_group.findOrFail(params.id)
 
-    return await student.delete()
+    return await classgroup.delete()
   }
 }

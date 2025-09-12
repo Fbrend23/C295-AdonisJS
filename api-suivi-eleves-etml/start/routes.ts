@@ -7,14 +7,18 @@
 |
 */
 
-import router from '@adonisjs/core/services/router'
+const ClassGroupsController = () => import('#controllers/class_groups_controller')
+const TeachersController = () => import('#controllers/teachers_controller')
 const StudentsController = () => import('#controllers/students_controller')
+import router from '@adonisjs/core/services/router'
 
 router.get('test', async () => {
   return 'API is working !'
 })
 
 router.resource('students', StudentsController).apiOnly()
+router.resource('classGroups', ClassGroupsController).apiOnly()
+router.resource('teachers', TeachersController).apiOnly()
 
 /* est équivalent à :
 router.group(() => {
