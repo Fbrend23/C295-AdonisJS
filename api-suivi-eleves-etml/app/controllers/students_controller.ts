@@ -1,27 +1,26 @@
 import Student from '#models/student'
 import type { HttpContext } from '@adonisjs/core/http'
-
+import { studentValidator } from '#validators/student'
 export default class StudentsController {
   /**
    * Display a list of resource
    */
   async index({ response }: HttpContext) {
-    response.ok(students)
+    response.ok(Student)
     return await Student.query().orderBy('name').orderBy('firstname')
   }
-
-  /**
-   * Display form to create a new record
-   */
-  async create({}: HttpContext) {}
 
   /**
    * Handle form submission for the create action
    */
   async store({ request, response }: HttpContext) {
-    const student = request.only(['name', 'firstname'])
-    response.created()
-    return await Student.create(student)
+    // Récupération des données envoyées par le client et validation des données
+    const { name, firstname } = await request.validateUsing(studentValidator)
+    // Création d'un nouvel élève avec les données validées
+    const student = await Student.create({ name, firstname })
+    // On utilise `response.created` pour retourner un code HTTP 201 avec les
+    // données de l'élève créé
+    return response.created(student)
   }
 
   /**
@@ -41,7 +40,7 @@ export default class StudentsController {
    */
   async update({ params, request }: HttpContext) {
     //Récupération des données
-    const data = request.only(['name', 'firstname'])
+    const data = await request.validateUsing(studentValidator)
 
     //Vérification de l'existence de l'élève
     const student = await Student.findOrFail(params.id)
