@@ -10,6 +10,14 @@ export default class extends BaseSchema {
       table.string('firstname').notNullable()
       table.timestamp('created_at')
       table.timestamp('updated_at')
+
+      //fk
+      table
+        .integer('class_group_id')
+        .unsigned()
+        .references('id')
+        .inTable('class_groups')
+        .onDelete('CASCADE')
     })
   }
   async down() {

@@ -1,0 +1,20 @@
+meta {
+  name: Get one comment
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost:3333/students/:student_id/comments/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  student_id: 
+  id: 
+}
+
+settings {
+  encodeUrl: true
+}

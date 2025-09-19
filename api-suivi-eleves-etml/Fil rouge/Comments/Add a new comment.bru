@@ -1,0 +1,21 @@
+meta {
+  name: Add a new comment
+  type: http
+  seq: 6
+}
+
+post {
+  url: http:/localhost:3333/students/1/comments
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+  "content": "Faut penser à arrêter cette formation"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

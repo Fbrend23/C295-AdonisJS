@@ -1,0 +1,21 @@
+meta {
+  name: Update comment
+  type: http
+  seq: 6
+}
+
+put {
+  url: http://localhost:3333/students/1/comments/2
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+  "content": "Vraiment très mauvaise dans cette formation"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
