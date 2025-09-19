@@ -11,6 +11,16 @@ export default class extends BaseSchema {
       table.string('email').notNullable()
       table.timestamp('created_at')
       table.timestamp('updated_at')
+
+      // Relation : 1 enseignant → 1 utilisateur
+      table
+        .integer('user_id')
+        .unsigned()
+        .references('id')
+        .inTable('users')
+        .onDelete('CASCADE')
+        .unique() // Un enseignant est lié à un seul utilisateur
+        .nullable() // Permettre aux enseignants de ne pas être liés à un utilisateur (par exemple, pour les anciens enseignants)
     })
   }
 

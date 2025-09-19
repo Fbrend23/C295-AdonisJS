@@ -1,6 +1,7 @@
 import Teacher from '#models/teacher'
 import type { HttpContext } from '@adonisjs/core/http'
 import { teacherValidator } from '#validators/teacher'
+
 export default class TeachersController {
   /**
    * Display a list of resource
@@ -16,9 +17,9 @@ export default class TeachersController {
    */
   async store({ request, response }: HttpContext) {
     // Récupération des données envoyées par le client et validation des données
-    const { name, firstname, email } = await request.validateUsing(teacherValidator)
+    const { name, firstname, email, userId } = await request.validateUsing(teacherValidator)
     // Création d'un nouvel élève avec les données validées
-    const teacher = await Teacher.create({ name, firstname, email })
+    const teacher = await Teacher.create({ name, firstname, email, userId })
     // On utilise `response.created` pour retourner un code HTTP 201 avec les
     // données de l'élève créé
     return response.created(teacher)
