@@ -19,7 +19,8 @@ export default class Student extends BaseModel {
 
   //FK
   @column()
-  declare class_group_id: number
+  declare classGroupId: number
+
   //Relations
   @belongsTo(() => ClassGroup)
   declare classGroups: BelongsTo<typeof ClassGroup>

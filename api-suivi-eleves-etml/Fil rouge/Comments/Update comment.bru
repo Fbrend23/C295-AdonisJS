@@ -5,14 +5,18 @@ meta {
 }
 
 put {
-  url: http://localhost:3333/students/1/comments/2
+  url: http://localhost:3333/students/1/comments/4
   body: json
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
 }
 
 body:json {
   {
-  "content": "Vraiment très mauvaise dans cette formation"
+  "content": "Nuloss modifié"
   }
 }
 
